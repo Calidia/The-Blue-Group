@@ -2,6 +2,8 @@ package kablewie;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.File;
+
 import javax.swing.*;
 
 /**
@@ -21,6 +23,8 @@ public class Game extends JPanel {
 	private Human m_player;
 	private int m_height;
 	private int m_width;
+	private Sounds sound;
+	private Tile handle;
    
 	/**
 	 * Constructor for this class. Takes in two args for use in makeGame()
@@ -121,19 +125,25 @@ public class Game extends JPanel {
 	 * @see Scoreboard.stopTimer()
 	 * @see Animations.java
 	 */
-	public void endGame(char gameState) {    
+	public void endGame(char gameState) {
+		
+		
 
 		switch(gameState){
         	case 'w':
+        		m_scoreboard.stopTimer();
         		m_scoreboard.setGameState("You win!");
+        		Sounds.Win();
+  
             		break;
         	case 'l':
+        	m_scoreboard.stopTimer();
 			m_scoreboard.setGameState("You lose!");
 			Animations a = new Animations(this); 
+			Sounds.Lose();
 			add(a);
 			remove(m_board);
 			a.setBounds(0,SCOREBOARD_HEIGHT, m_width, m_board.getHeight());
-			m_scoreboard.stopTimer();
 			break;
 		case 'r':
 			m_scoreboard.reset();
